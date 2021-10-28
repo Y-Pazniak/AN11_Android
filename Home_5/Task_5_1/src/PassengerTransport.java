@@ -45,6 +45,6 @@ public class PassengerTransport extends LandTransport {//класс для со�
     }
 
     private double countFuelConsumption(double time) {
-        return time * getFuelConsumption();
+        return time * (getMaxSpeed()/100) * getFuelConsumption();
     }
 }
