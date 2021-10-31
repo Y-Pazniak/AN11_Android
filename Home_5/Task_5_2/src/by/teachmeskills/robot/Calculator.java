@@ -3,21 +3,23 @@ package by.teachmeskills.robot;
 public class Calculator {
     private int maxPrice;
 
-    public String findMaxPrice(Robot[] robots) { //если 2 или более робота с одинаковой ценой - все равно возвращаем первого
+    public Robot[] findMaxPrice(Robot[] robots) {
         maxPrice = 0;
-        String robotName = null;
+        int count = 0;
+        Robot[] expensiveRobots = new Robot[robots.length];
 
         for (Robot robot : robots) {
             int currentPrice = robot.getPrice();
             if (currentPrice > maxPrice) {
                 maxPrice = currentPrice;
-                robotName = robot.getName();
             }
         }
-        return robotName;
-    }
-
-    public int getMaxPrice() {
-        return maxPrice;
+        for (Robot robot : robots) {
+            if (robot.getPrice() == maxPrice) {
+                expensiveRobots[count] = robot;
+                count++;
+            }
+        }
+        return expensiveRobots;
     }
 }

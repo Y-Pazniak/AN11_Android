@@ -9,11 +9,14 @@ import by.teachmeskills.robot.heads.ToshibaHead;
 import by.teachmeskills.robot.legs.SamsungLeg;
 import by.teachmeskills.robot.legs.ToshibaLeg;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Run {
     public static void main(String[] args) {
-        Robot T800 = new Robot(new SamsungHead(200), new SonyHand(150), new ToshibaLeg(100), "T800"); //судя по количеству конечностей, у нас получился не брутальный Т800, а одноногая форма однорукого бандита
-        Robot R2D2 = new Robot(new SonyHead(150), new SamsungHand(200), new SamsungLeg(200), "R2D2");
-        Robot Walle = new Robot(new ToshibaHead(100), new ToshibaHand(100), new SamsungLeg(200), "Walle");
+        Robot T800 = new Robot(new SamsungHead(200), new SonyHand(200), new ToshibaLeg(200), "T800"); //судя по количеству конечностей, у нас получился не брутальный Т800, а одноногая форма однорукого бандита
+        Robot R2D2 = new Robot(new SonyHead(200), new SamsungHand(200), new SamsungLeg(200), "R2D2");
+        Robot Walle = new Robot(new ToshibaHead(200), new ToshibaHand(200), new SamsungLeg(200), "Walle");
 
         Robot[] robots = {T800, R2D2, Walle};
 
@@ -22,7 +25,15 @@ public class Run {
         }
 
         Calculator calculator = new Calculator();
-        System.out.println("The most expensive robot is: " + calculator.findMaxPrice(robots) + " it's price is: " + calculator.getMaxPrice());
+        Robot[] expensiveRobots = calculator.findMaxPrice(robots);
+        System.out.println("The most expensive robots are: ");
+        for (Robot robot: expensiveRobots) {
+            if (robot != null){
+                System.out.println(robot.getName() + " it's price is: " + robot.getPrice());
+            }
+        }
+
+        //System.out.println("The most expensive robot is: " + calculator.findMaxPrice(robots) + " it's price is: " + calculator.getMaxPrice());
 
 
         /*
