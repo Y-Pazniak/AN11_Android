@@ -30,7 +30,9 @@ public class Run {
         for (Robot robot: expensiveRobots) {
             if (robot != null){
                 System.out.println(robot.getName() + " it's price is: " + robot.getPrice());
-            }
+            } else {
+				break;
+			}
         }
 
         //System.out.println("The most expensive robot is: " + calculator.findMaxPrice(robots) + " it's price is: " + calculator.getMaxPrice());
