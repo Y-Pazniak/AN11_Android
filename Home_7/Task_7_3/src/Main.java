@@ -42,7 +42,7 @@ public class Main { //Дана строка, найти предложение �
         return local;
     }
 
-    public static boolean checkReverseWord(String word){
+    public static boolean checkReverseWord(final String word) {
         return (word.length() > 1) && (word.equalsIgnoreCase((new StringBuilder(word).reverse()).toString()));
     }
 }
