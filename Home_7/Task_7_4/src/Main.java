@@ -1,6 +1,6 @@
 public class Main { //Найти слово, в котором число различных символов минимально
     public static void main(String[] args) {
-        String s1 = "myla ramy faaaafffff fffffaaaaaaa fafafafafa 000000 111 666 111122222 12121212 1112223";
+        String s1 = "myla ramy ffafafaaaafffff fffffaaaaaaa fafafafafa 000000 111 666 111122222 12121212 1112223";
         findMinLetters(s1);
     }
 
@@ -33,10 +33,11 @@ public class Main { //Найти слово, в котором число раз
     public static int findDifferentLetterCount(final String s) {  //этот метод считает, сколько разных символов в переданном слове
         int local = 1; //если мы получили слово, то как минимум 1 символ в слове уже есть
         for (int i = 0; i < s.length() - 1; i++) {
-            if (!s.substring(i + 1).contains(String.valueOf(s.charAt(i)))) { //берем символ и следующий за ним символ и сравниваем - если не отличаются, то переменная не увелчивается
+            if (!s.substring(i + 1).contains(String.valueOf(s.charAt(i)))) { //отсекаем проверяемый символв и символы перед ним и смотрим, есть ли такой символ - если больше его нет, а строка продолжается, увеличиваем к-во символов
                 local++;
             }
         }
+        System.out.println(s + "  - symbols - " + local);
         return local; //возвращаем, сколько разных символов в слове
     }
 }
