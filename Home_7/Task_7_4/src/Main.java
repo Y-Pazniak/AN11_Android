@@ -1,6 +1,11 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 public class Main { //Найти слово, в котором число различных символов минимально
     public static void main(String[] args) {
-        String s1 = "myla ramy ffafafaaaafffff fffffaaaaaaa fafafafafa 000000 111 666 111122222 12121212 1112223";
+        String s1 = "myla ramy ffafafaaaafffff fffffAaaaaaa fafafafafa 000000 111 666 111122222 12121212 1112223";
         findMinLetters(s1);
     }
 
@@ -30,14 +35,23 @@ public class Main { //Найти слово, в котором число раз
         return min; //возвращаем минимальное к-во символов
     }
 
-    public static int findDifferentLetterCount(final String s) {  //этот метод считает, сколько разных символов в переданном слове
-        int local = 1; //если мы получили слово, то как минимум 1 символ в слове уже есть
-        for (int i = 0; i < s.length() - 1; i++) {
-            if (!s.substring(i + 1).contains(String.valueOf(s.charAt(i)))) { //отсекаем проверяемый символв и символы перед ним и смотрим, есть ли такой символ - если больше его нет, а строка продолжается, увеличиваем к-во символов
-                local++;
+    public static int findDifferentLetterCount(final String word) {  //этот метод считает, сколько разных символов в переданном слове
+//        int local = 1; //если мы получили слово, то как минимум 1 символ в слове уже есть
+//        for (int i = 0; i < s.length() - 1; i++) {
+//            if (!s.substring(i + 1).contains(String.valueOf(s.charAt(i)))) { //отсекаем проверяемый символв и символы перед ним и смотрим, есть ли такой символ - если больше его нет, а строка продолжается, увеличиваем к-во символов
+//                local++;
+//            }
+//        }
+//        System.out.println(s + "  - symbols - " + local);
+        int countSymbols = 1;
+        char[] chars = word.toLowerCase().toCharArray(); //приводим слово в нижний регистр и разбиваем на массив чаров
+        Arrays.sort(chars); //сортируем чары по ASCII (в алфовитном порядке)
+        for (int i = 0; i < chars.length - 1; i++) { //запускаем обход по массиву
+            if (chars[i] != chars[i + 1]) { //если чар отличается от соседа - увеличиваем к-во символов
+                countSymbols++;
             }
         }
-        System.out.println(s + "  - symbols - " + local);
-        return local; //возвращаем, сколько разных символов в слове
+        System.out.println(word + "  - symbols - " + countSymbols);
+        return countSymbols; //возвращаем, сколько разных символов в слове
     }
 }
