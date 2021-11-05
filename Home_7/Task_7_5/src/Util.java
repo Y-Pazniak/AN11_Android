@@ -6,8 +6,7 @@ public class Util { //создал отдельный класс, чтобы ф�
 //                patient.getPatientName() +
 //                aboutTest +
 //                aboutAntibodies;
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Dear ");
+        StringBuilder stringBuilder = new StringBuilder("Dear ");
         stringBuilder.append(patient.getPatientName());
 
         if (covidTest) {
