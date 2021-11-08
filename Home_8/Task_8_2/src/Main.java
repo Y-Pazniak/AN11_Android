@@ -27,11 +27,11 @@ public class Main {
                 throw new WrongPasswordException("Password and confirm password are not equals.");
             }
 
-            if (!checkCorrectSymbols(login)) {
+            if (checkCorrectSymbols(login)) {
                 throw new WrongLoginException("Wrong login. Use only A-Z(a-z) letters, 0-9 integers and underscore \"_\".");
             }
 
-            if (!checkCorrectSymbols(password)) {
+            if (checkCorrectSymbols(password)) {
                 throw new WrongPasswordException("Wrong password. Use only A-Z(a-z) letters, 0-9 integers and underscore \"_\".");
             }
         } catch (WrongLoginException | WrongPasswordException exception) {
@@ -48,10 +48,10 @@ public class Main {
                     && !checkLowerCaseSymbols(c)
                     && !checkUpperCaseSymbols(c)
                     && !checkUnderscore(c)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private static boolean checkIntegers(final char c){
