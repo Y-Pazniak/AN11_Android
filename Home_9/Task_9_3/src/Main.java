@@ -26,18 +26,34 @@ public class Main { //Проверка на цензуру
         return words.toArray(new String[0]);
     }
 
-    public static void checkForStopWords(final String[] blackList, final String[] text) { //проверить текст на стоп-слова
-        boolean isTextOk = true;
-        for (String blackWord : blackList) {
-            for (String strForCheck : text) {
-                if (strForCheck.toLowerCase().contains(blackWord)){
-                    isTextOk = false;
-                    System.out.println("Wrong word: \"" + blackWord + "\" at line: \"" + strForCheck + "\"");
+    public static void checkForStopWords(final String[] blackList, final String[] text) {
+        for (String blackWord: blackList) {
+            for (String line: text) {
+                String[] words = line.trim().split("[.!?,:;«»\"\\s+]");
+                for (String word: words) {
+                    if (blackWord.equalsIgnoreCase(word)){
+                        System.out.println("Wrong word: \"" + blackWord + "\" at line: \"" + line + "\"");
+                    } else {
+                        System.out.println("Text is good.");
+                    }
                 }
             }
         }
-        if (isTextOk) {
-            System.out.println("Your text is OK");
-        }
     }
+
+
+//    public static void checkForStopWords(final String[] blackList, final String[] text) { //проверить текст на стоп-слова
+//        boolean isTextOk = true;
+//        for (String blackWord : blackList) {
+//            for (String strForCheck : text) {
+//                if (strForCheck.toLowerCase().contains(blackWord)){
+//                    isTextOk = false;
+//                    System.out.println("Wrong word: \"" + blackWord + "\" at line: \"" + strForCheck + "\"");
+//                }
+//            }
+//        }
+//        if (isTextOk) {
+//            System.out.println("Your text is OK");
+//        }
+//    }
 }
