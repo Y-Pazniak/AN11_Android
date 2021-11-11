@@ -30,7 +30,7 @@ public class Main { //В исходном файле находятся слов
     private static void readFileAndFillByPalindromes(final String sourceFile, final String palindromeFile) { //считываем содержимое файла и сохраняем в лист, лист возвращаем
         List<String> strings = new ArrayList<>(); //можно было в обычный массив, но это лишний метод писать бы пришлось - мне кажется, в лист в данной ситуации лучше сохранять
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(sourceFile))) {
-            while (bufferedReader.ready()) {
+            while ((stringToCheck  = bufferedReader.readLine()) != null) {
                 String stringToCheck = bufferedReader.readLine();
                 if (isPalindrome(stringToCheck)) {
                     strings.add(stringToCheck);
