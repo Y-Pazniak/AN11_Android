@@ -45,7 +45,6 @@ public class Main {
             if (i < persons.size()) {
                 Person temp = persons.get(i);
                 temp.setName(name);
-                persons.set(i, temp);
             } else {
                 System.out.println("Too big integer, use less " + (persons.size()));
             }
