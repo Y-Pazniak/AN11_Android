@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Util { //тут творится чертовщина - я чуть голову не сломал, пока осознал, что наворотил в прошлый раз в этой задаче
@@ -61,36 +62,54 @@ public class Util { //тут творится чертовщина - я чуть
                 print("Incorrect date, try again");
             } else
                 attendSheet.get(0).add(readDate); //если имя не пустое и состоит хотя бы из 3 символов, добавляем его в массив и оповещаем преподавателя
-                print("Date " + readDate + " successfully added.");
-                flag = false;
+            print("Date " + readDate + " successfully added.");
+            flag = false;
         }
         return attendSheet;
     }
 
     public static void askForNoticeStudent(ArrayList<ArrayList<String>> attendSheet) { //здесь мы просим преподавателя заполнить посещаемость
-        System.out.println("Enter the students number to notice it or exit to exit");
-        int arrHeight = attendSheet.size();
-        for (int i = 1; i < arrHeight; i++) { //здесь выводим имена и код имени в консоль
-            print(i + " - " + attendSheet.get(i).get(0));
-        }
+        print("Enter the students number to notice it. Enter exit to exit. Enter delete and students number to delete if (example: delete 1)");
+        printStudentsWithNumbers(attendSheet);
         while (true) { //здесь считываем в консоль студентов для заполнения (их коды)
             try {
-                String readStudentNumber = bfr.readLine();
-                if (readStudentNumber.equalsIgnoreCase("exit")) {
+                String readStudentNumber = bfr.readLine().toLowerCase();
+                if (readStudentNumber.equals("exit")) {
                     break;
-                }
-                int notice = Integer.parseInt(readStudentNumber);
-                if (notice > attendSheet.size() - 1) {
-                    System.out.println("Student not exists");
                 } else {
-                    attendSheet.get(notice).add("+");
-                    print("Student is noticed successfully: " + attendSheet.get(notice).get(0));
+                    if (readStudentNumber.contains("delete")) {
+                        removeStudent(readStudentNumber, attendSheet);
+                    } else {
+                        int notice = Integer.parseInt(readStudentNumber);
+                        if (notice > attendSheet.size() - 1) {
+                            print("Student not exists");
+                        } else {
+                            attendSheet.get(notice).add("+");
+                            print("Student is noticed successfully: " + attendSheet.get(notice).get(0));
+                        }
+                    }
                 }
             } catch (IOException | NumberFormatException exc) {
                 System.out.println("Use only integers 0-9");
             }
         }
         fillNoneStudents(attendSheet);
+    }
+
+    private static void removeStudent(final String readStudentNumber, ArrayList<ArrayList<String>> attendSheet){
+        String[] delete = readStudentNumber.trim().split("\\s+");
+        int numberToDelete = Integer.parseInt(delete[1]);
+        attendSheet.remove(numberToDelete);
+        print("Successfully removed: "  + attendSheet.get(numberToDelete).get(0));
+        print("Enter the students number to notice it. Enter exit to exit. Enter delete and students number to delete if (example: delete 1)");
+        printStudentsWithNumbers(attendSheet);
+    }
+
+    private static void printStudentsWithNumbers(ArrayList<ArrayList<String>> attendSheet){
+        int arrHeight = attendSheet.size();
+        for (int i = 1; i < arrHeight; i++) { //здесь выводим имена и код имени в консоль
+            print(i + " - " + attendSheet.get(i).get(0));
+        }
     }
 
     private static void fillNoneStudents(ArrayList<ArrayList<String>> attendSheet) { //здесь мы помечаем минусами всех студентов, которые не помечены плюсами - так удобнее контролить их
