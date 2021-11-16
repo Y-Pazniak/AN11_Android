@@ -5,22 +5,40 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
         Set<String> setFirst = new HashSet<>(Arrays.asList("foo", "bar", "baz"));
-        Set<String> setSecond = new HashSet<>(Arrays.asList("fred", "foo", "qux", "xyzzy", "bar"));
-        //union(setFirst, setSecond);
-        intersect(setFirst, setSecond);
-        printSet(setFirst);
+        Set<String> setSecond = new HashSet<>(Arrays.asList("fred", "foo", "qux", "bar"));
+        Set<String> setThird = new HashSet<>(Arrays.asList("osе", "rol", "foo", "qux", "xyzzy", "zed", "bar"));
+        Set<String> unionSet = union(setFirst, setSecond, setThird);
+        Set<String> intersectSet = intersect(setFirst, setSecond, setThird);
+        printSet(unionSet);
+        System.out.println("***");
+        printSet(intersectSet);
     }
 
-    private static <T> void union(Set<T> setFirst, Set<T> setSecond) { //операция объединения
-        setFirst.addAll(setSecond);
+    @SafeVarargs
+    private static <T> Set<T> union(Set<T>... sets) { //операция объединения
+        if (sets != null) {
+            Set<T> localSet = new HashSet<>(sets[0]);
+            for (Set<T> s : sets) {
+                localSet.addAll(s);
+            }
+            return localSet;
+        } else return new HashSet<>();
     }
 
-    private static <T> void intersect(Set<T> setFirst, Set<T> setSecond) { //операция пересечения
-        setFirst.retainAll(setSecond);
+    @SafeVarargs
+    private static <T> Set<T> intersect(Set<T>... sets) { //операция пересечения
+        if (sets != null) {
+            Set<T> localSet = new HashSet<>(sets[0]);
+            for (Set<T> s : sets) {
+                localSet.retainAll(s);
+            }
+            return localSet;
+        } else return new HashSet<>();
     }
 
-    private static <T> void printSet(Set<T> setFirst) {
-        for (var v : setFirst) {
+
+    private static <T> void printSet(Set<T> set) {
+        for (var v : set) {
             System.out.println(v);
         }
     }
