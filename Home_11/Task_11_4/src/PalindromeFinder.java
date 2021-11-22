@@ -1,6 +1,6 @@
 import java.util.concurrent.Callable;
 
-public class PalindromeFinder implements Callable<String> {
+public class PalindromeFinder implements Callable<Boolean> {
     private final String wordToCheck;
 
     public PalindromeFinder(final String wordToCheck) {
@@ -8,11 +8,11 @@ public class PalindromeFinder implements Callable<String> {
     }
 
     @Override
-    public String call() throws Exception {
+    public Boolean call() {
         return isPalindrome();
     }
 
-    private String isPalindrome() {
+    private Boolean isPalindrome() {
         StringBuilder sb = new StringBuilder(wordToCheck);
         String reverseWord = sb.reverse().toString();
         try {
@@ -20,6 +20,6 @@ public class PalindromeFinder implements Callable<String> {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return wordToCheck.equals(reverseWord) ? wordToCheck + " - is palindrome" : wordToCheck + " - not palindrome";
+        return wordToCheck.equals(reverseWord);
     }
 }
