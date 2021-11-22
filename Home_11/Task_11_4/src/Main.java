@@ -1,13 +1,13 @@
 import java.util.concurrent.*;
 
 public class Main {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) {
         String[] words = new String[]{"как", "козодой", "кот", "кабак", "кулебяка", "кок", "козел", "мадам", "расстегай", "шалаш", "шабаш", "черт"};
         Future<Boolean>[] futureTasks = fillFutureTask(words);
         printResult(futureTasks, words);
     }
 
-    private static Future<Boolean>[] fillFutureTask(final String[] words) throws ExecutionException, InterruptedException {
+    private static Future<Boolean>[] fillFutureTask(final String[] words) {
         Future<Boolean>[] futureTasks = new Future[words.length];
         ExecutorService service = Executors.newFixedThreadPool(8);
         for (int i = 0; i < words.length; i++) {
