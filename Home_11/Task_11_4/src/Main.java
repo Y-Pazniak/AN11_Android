@@ -1,31 +1,30 @@
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import java.util.concurrent.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         String[] words = new String[]{"как", "козодой", "кот", "кабак", "кулебяка", "кок", "козел", "мадам", "расстегай", "шалаш", "шабаш", "черт"};
-        FutureTask<Boolean>[] futureTasks = fillFutureTask(words);
+        Future<Boolean>[] futureTasks = fillFutureTask(words);
         printResult(futureTasks, words);
     }
 
-    private static FutureTask<Boolean>[] fillFutureTask(final String[] words) {
-        FutureTask<Boolean>[] futureTasks = new FutureTask[words.length];
+    private static Future<Boolean>[] fillFutureTask(final String[] words) throws ExecutionException, InterruptedException {
+        Future<Boolean>[] futureTasks = new Future[words.length];
+        ExecutorService service = Executors.newFixedThreadPool(8);
         for (int i = 0; i < words.length; i++) {
-            PalindromeFinder palindromeFinder = new PalindromeFinder(words[i]);
-            FutureTask<Boolean> futureTask = new FutureTask<>(palindromeFinder);
-            futureTasks[i] = futureTask;
-            new Thread(futureTask).start();
+            Future result = service.submit(new PalindromeFinder(words[i]));
+            futureTasks[i] = result;
         }
+        service.shutdown();
         return futureTasks;
     }
 
-    private static void printResult(final FutureTask<Boolean>[] futureTasks, final String[] words) {
+    private static void printResult(final Future<Boolean>[] futureTasks, final String[] words) {
         boolean needNext = true;
 
         while (needNext) {
             int count = 0;
             for (int i = 0; i < futureTasks.length; i++) {
-                FutureTask<Boolean> futureTask = futureTasks[i];
+                Future<Boolean> futureTask = futureTasks[i];
                 if (futureTask != null) {
                     if (futureTask.isDone()) {
                         try {
